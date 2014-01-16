@@ -30,7 +30,7 @@
 
 import QtQuick 2.0
 import Sailfish.Silica 1.0
-
+import QtQuick.LocalStorage 2.0
 
 Page {
     id: page
@@ -84,8 +84,13 @@ Page {
             }
         } else {
             main.noMoreMoves = true;
-            var dialog = pageStack.push(Qt.resolvedUrl("../dialogs/EndGameDialog.qml"), { "score": main.currentNumber });
-            dialog.accepted.connect(function() { resetBoard(); });
+            var dialog = pageStack.push(Qt.resolvedUrl("../dialogs/GameOverDialog.qml"), { "score": main.currentNumber });
+            dialog.accepted.connect(
+                        function() {
+                            saveHighScore(main.currentNumber);
+                            resetBoard();
+                        }
+            );
         }
     }
 
@@ -112,6 +117,44 @@ Page {
         } else if (history.length == 1) resetBoard();
     }
 
+    function saveHighScore(score) {
+        var db = LocalStorage.openDatabaseSync("CentoDB", "1.0", "Cento High Scores", 1000000);
+
+        db.transaction(
+            function(tx) {
+                // Create the database if it doesn't already exist
+                tx.executeSql('CREATE TABLE IF NOT EXISTS hiscore(date DATE, score INT)');
+
+                // Insert current score
+                var today = new Date();
+                var todayString = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+                tx.executeSql('INSERT INTO hiscore VALUES(?, ?)', [ todayString, score ]);
+            }
+        )
+    }
+
+    function getHighScores() {
+        var db = LocalStorage.openDatabaseSync("CentoDB", "1.0", "Cento High Scores", 1000000);
+
+        db.transaction(
+            function(tx) {
+                try {
+                    // Get top 10 high scores
+                    var rs = tx.executeSql('SELECT * FROM hiscore order by score desc,date desc limit 10');
+
+                    var r = "";
+                    for(var i = 0; i < rs.rows.length; i++) {
+                        r += rs.rows.item(i).date + " " + rs.rows.item(i).score + "\n";
+                    }
+                    // DEBUG
+                    console.log(r);
+                } catch (error) {
+                    // Probably the table has not been created yet
+                }
+            }
+        )
+    }
+
     SilicaFlickable {
         anchors.fill: parent
         contentHeight: childrenRect.height
@@ -120,6 +163,10 @@ Page {
             MenuItem {
                 text: "About Cento"
                 onClicked: pageStack.push(Qt.resolvedUrl("AboutPage.qml"), { "version": main.version })
+            }
+            MenuItem {
+                text: "High Scores"
+                onClicked: getHighScores();
             }
             MenuItem {
                 text: "Reset board"

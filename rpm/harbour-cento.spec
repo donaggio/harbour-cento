@@ -14,9 +14,9 @@ Name:       harbour-cento
 %{?qtc_builddir:%define _builddir %qtc_builddir}
 Summary:    Numerical puzzle game
 Version:    0.3
-Release:    1
+Release:    2
 Group:      Qt/Qt
-License:    LICENSE
+License:    MIT
 URL:        http://example.org/
 Source0:    %{name}-%{version}.tar.bz2
 Source100:  harbour-cento.yaml

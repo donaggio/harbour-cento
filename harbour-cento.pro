@@ -21,5 +21,5 @@ OTHER_FILES += qml/harbour-cento.qml \
     harbour-cento.desktop \
     qml/pages/GamePage.qml \
     qml/pages/AboutPage.qml \
-    qml/dialogs/EndGameDialog.qml \
-    harbour-cento.png
+    harbour-cento.png \
+    qml/dialogs/GameOverDialog.qml
