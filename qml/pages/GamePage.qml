@@ -1,31 +1,9 @@
 /*
-  Copyright (C) 2013 Jolla Ltd.
-  Contact: Thomas Perl <thomas.perl@jollamobile.com>
+  Copyright (C) 2014 Luca Donaggio
+  Contact: Luca Donaggio <donaggio@gmail.com>
   All rights reserved.
 
-  You may use this file under the terms of BSD license as follows:
-
-  Redistribution and use in source and binary forms, with or without
-  modification, are permitted provided that the following conditions are met:
-    * Redistributions of source code must retain the above copyright
-      notice, this list of conditions and the following disclaimer.
-    * Redistributions in binary form must reproduce the above copyright
-      notice, this list of conditions and the following disclaimer in the
-      documentation and/or other materials provided with the distribution.
-    * Neither the name of the Jolla Ltd nor the
-      names of its contributors may be used to endorse or promote products
-      derived from this software without specific prior written permission.
-
-  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
-  ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-  WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-  DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDERS OR CONTRIBUTORS BE LIABLE FOR
-  ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
-  (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-  LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
-  ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  You may use this file under the terms of MIT license
 */
 
 import QtQuick 2.0
@@ -111,6 +89,7 @@ Page {
             var lastMove = history.pop();
             var prevMove = history.pop();
             main.currentNumber = (main.currentNumber - 2);
+            main.noMoreMoves = false;
             cellMatrix.itemAt(lastMove).cellText = '';
             cellMatrix.itemAt(prevMove).cellText = '';
             cellClicked(prevMove);
@@ -118,41 +97,16 @@ Page {
     }
 
     function saveHighScore(score) {
-        var db = LocalStorage.openDatabaseSync("CentoDB", "1.0", "Cento High Scores", 1000000);
-
-        db.transaction(
-            function(tx) {
-                // Create the database if it doesn't already exist
-                tx.executeSql('CREATE TABLE IF NOT EXISTS hiscore(date DATE, score INT)');
-
-                // Insert current score
-                var today = new Date();
-                var todayString = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
-                tx.executeSql('INSERT INTO hiscore VALUES(?, ?)', [ todayString, score ]);
-            }
-        )
-    }
-
-    function getHighScores() {
-        var db = LocalStorage.openDatabaseSync("CentoDB", "1.0", "Cento High Scores", 1000000);
-
-        db.transaction(
-            function(tx) {
-                try {
-                    // Get top 10 high scores
-                    var rs = tx.executeSql('SELECT * FROM hiscore order by score desc,date desc limit 10');
-
-                    var r = "";
-                    for(var i = 0; i < rs.rows.length; i++) {
-                        r += rs.rows.item(i).date + " " + rs.rows.item(i).score + "\n";
-                    }
-                    // DEBUG
-                    console.log(r);
-                } catch (error) {
-                    // Probably the table has not been created yet
+        try {
+            main.db.transaction(
+                function(tx) {
+                    // Insert current score
+                    tx.executeSql('INSERT INTO hiscore VALUES(date(\'now\'), ?)', [ score ]);
                 }
-            }
-        )
+            );
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     SilicaFlickable {
@@ -166,7 +120,7 @@ Page {
             }
             MenuItem {
                 text: "High Scores"
-                onClicked: getHighScores();
+                onClicked: pageStack.push(Qt.resolvedUrl("HiScoresPage.qml"))
             }
             MenuItem {
                 text: "Reset board"
@@ -180,7 +134,9 @@ Page {
         }
 
         Column {
-            width: page.width
+            id: container
+            width: (parent.width - (2 * Theme.paddingMedium))
+            anchors.horizontalCenter: parent.horizontalCenter
             spacing: Theme.paddingLarge
 
             PageHeader {
@@ -203,7 +159,7 @@ Page {
                         property alias cellClickable: cellMouseArea.enabled
                         property bool cellGlowing: false
 
-                        width: ((page.width - (2 * Theme.paddingSmall)) / 10)
+                        width: (container.width / 10)
                         height: width
                         color: "transparent"
                         border.color: Theme.highlightColor
@@ -231,10 +187,23 @@ Page {
             }
 
             Label {
-                id: scoreLabel
-                width: (parent.width - (2 * Theme.paddingMedium))
+                visible: (main.currentNumber > 0)
                 anchors.horizontalCenter: parent.horizontalCenter
-                text: ((main.currentNumber > 0) ? 'You score: ' + main.currentNumber : '') + (main.noMoreMoves ? '<br /><br />No more moves!' : '')
+                text: 'Your score is:'
+            }
+
+            Label {
+                visible: (main.currentNumber > 0)
+                anchors.horizontalCenter: parent.horizontalCenter
+                font.pixelSize: Theme.fontSizeExtraLarge
+                font.weight: Font.Bold
+                text: main.currentNumber
+            }
+
+            Label {
+                visible: main.noMoreMoves
+                anchors.horizontalCenter: parent.horizontalCenter
+                text: "No more moves!"
             }
         }
     }

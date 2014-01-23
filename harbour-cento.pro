@@ -22,4 +22,5 @@ OTHER_FILES += qml/harbour-cento.qml \
     qml/pages/GamePage.qml \
     qml/pages/AboutPage.qml \
     harbour-cento.png \
-    qml/dialogs/GameOverDialog.qml
+    qml/dialogs/GameOverDialog.qml \
+    qml/pages/HiScoresPage.qml
