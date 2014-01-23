@@ -8,7 +8,7 @@
 
 import QtQuick 2.0
 import Sailfish.Silica 1.0
-import QtQuick.LocalStorage 2.0
+import "../lib/dbmanager.js" as DB
 
 Page {
     id: page
@@ -65,7 +65,7 @@ Page {
             var dialog = pageStack.push(Qt.resolvedUrl("../dialogs/GameOverDialog.qml"), { "score": main.currentNumber });
             dialog.accepted.connect(
                         function() {
-                            saveHighScore(main.currentNumber);
+                            DB.saveHighScore(main.currentNumber);
                             resetBoard();
                         }
             );
@@ -94,19 +94,6 @@ Page {
             cellMatrix.itemAt(prevMove).cellText = '';
             cellClicked(prevMove);
         } else if (history.length == 1) resetBoard();
-    }
-
-    function saveHighScore(score) {
-        try {
-            main.db.transaction(
-                function(tx) {
-                    // Insert current score
-                    tx.executeSql('INSERT INTO hiscore VALUES(date(\'now\'), ?)', [ score ]);
-                }
-            );
-        } catch (error) {
-            console.log(error);
-        }
     }
 
     SilicaFlickable {

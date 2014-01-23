@@ -23,4 +23,5 @@ OTHER_FILES += qml/harbour-cento.qml \
     qml/pages/AboutPage.qml \
     harbour-cento.png \
     qml/dialogs/GameOverDialog.qml \
-    qml/pages/HiScoresPage.qml
+    qml/pages/HiScoresPage.qml \
+    qml/lib/dbmanager.js

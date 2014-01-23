@@ -24,20 +24,6 @@ ApplicationWindow
     GamePage {
         id: game
     }
-
-    Component.onCompleted: {
-        try {
-            db = LocalStorage.openDatabaseSync("CentoDB", "1.0", "Cento High Scores", 1000000);
-            db.transaction(
-               function(tx) {
-                   // Create high scores table if it doesn't already exist
-                   tx.executeSql('CREATE TABLE IF NOT EXISTS hiscore(date DATE, score INT)');
-               }
-            );
-        } catch (error) {
-            console.log(error);
-        }
-    }
 }
 
 
