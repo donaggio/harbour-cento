@@ -10,13 +10,40 @@ import QtQuick 2.0
 import Sailfish.Silica 1.0
 
 CoverBackground {
-    Label {
-        id: label
+    Column {
         width: (parent.width - (2 * Theme.paddingSmall))
+//        anchors.horizontalCenter: parent.horizontalCenter
         anchors.centerIn: parent
-        wrapMode: Text.WordWrap
-        horizontalAlignment: Text.AlignHCenter
-        text: 'Cento<br /><br />' + ((main.currentNumber > 0) ? 'Your ' + (!main.noMoreMoves ? 'present ' : '') + 'score is: ' + main.currentNumber + (main.noMoreMoves ? '<br /><br />Game over!' : '') : 'New game')
+        spacing: Theme.paddingMedium
+
+        Label {
+            width: parent.width
+            horizontalAlignment: Text.AlignHCenter
+            text: qsTr("Cento")
+        }
+
+        Label {
+            id: labelNewGame
+            visible: (main.currentNumber == 0)
+            width: parent.width
+            horizontalAlignment: Text.AlignHCenter
+            text: qsTr("New game")
+        }
+
+        Label {
+            visible: !labelNewGame.visible
+            width: parent.width
+            horizontalAlignment: Text.AlignHCenter
+            wrapMode: Text.WordWrap
+            text: qsTr("Your %1score is: %2").arg((!main.noMoreMoves ? qsTr("present ") : "")).arg(main.currentNumber)
+        }
+
+        Label {
+            visible: (!labelNewGame.visible && main.noMoreMoves)
+            width: parent.width
+            horizontalAlignment: Text.AlignHCenter
+            text: qsTr("Game over!")
+        }
     }
 
     CoverActionList {

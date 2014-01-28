@@ -17,12 +17,12 @@ Page {
         anchors.fill: parent
 
         header: PageHeader {
-            title: "High Scores"
+            title: qsTr("High Scores")
         }
 
         ViewPlaceholder {
             enabled: container.count == 0
-            text: "You haven't scored high enough, yet!"
+            text: qsTr("You haven't scored high enough, yet!")
         }
 
         model: ListModel { id: scoreModel }
@@ -57,7 +57,7 @@ Page {
                 anchors.left: scoreLabel.right
                 anchors.right: parent.right
                 anchors.leftMargin: Theme.paddingMedium
-                text: "scored " + num + " " + ((num == 1) ? "time" : "times")
+                text: qsTr("scored %1 %2").arg(num).arg(((num == 1) ? qsTr("time") : qsTr("times")))
             }
 
             Label {
@@ -66,7 +66,7 @@ Page {
                 anchors.left: scoreLabel.left
                 anchors.right: parent.right
                 font.pixelSize: Theme.fontSizeExtraSmall
-                text: ((num == 1) ? "On" : "Last on") + " " + last.toLocaleDateString()
+                text: ((num == 1) ? qsTr("On") : qsTr("Last on")) + " " + last.toLocaleDateString(Qt.locale())
             }
         }
 

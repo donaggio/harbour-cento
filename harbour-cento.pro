@@ -25,3 +25,17 @@ OTHER_FILES += qml/harbour-cento.qml \
     qml/dialogs/GameOverDialog.qml \
     qml/pages/HiScoresPage.qml \
     qml/lib/dbmanager.js
+
+localization.files = l10n
+localization.path = /usr/share/$${TARGET}
+
+INSTALLS += localization
+
+lupdate_only {
+    SOURCES = qml/*.qml \
+        qml/cover/*.qml \
+        qml/dialogs/*.qml \
+        qml/pages/*.qml
+
+    TRANSLATIONS = l10n/it.ts
+}

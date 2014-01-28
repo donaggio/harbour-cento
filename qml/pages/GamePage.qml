@@ -96,26 +96,28 @@ Page {
         } else if (history.length == 1) resetBoard();
     }
 
+    allowedOrientations: Orientation.Portrait
+
     SilicaFlickable {
         anchors.fill: parent
         contentHeight: childrenRect.height
 
         PullDownMenu {
             MenuItem {
-                text: "About Cento"
+                text: qsTr("About Cento")
                 onClicked: pageStack.push(Qt.resolvedUrl("AboutPage.qml"), { "version": main.version })
             }
             MenuItem {
-                text: "High Scores"
+                text: qsTr("High Scores")
                 onClicked: pageStack.push(Qt.resolvedUrl("HiScoresPage.qml"))
             }
             MenuItem {
-                text: "Reset board"
+                text: qsTr("Reset board")
                 onClicked: resetBoard();
             }
             MenuItem {
                 visible: (main.currentNumber > 0)
-                text: "Undo last move"
+                text: qsTr("Undo last move")
                 onClicked: historyBack();
             }
         }
@@ -127,7 +129,7 @@ Page {
             spacing: Theme.paddingLarge
 
             PageHeader {
-                title: "Cento"
+                title: qsTr("Cento")
             }
 
             Grid {
@@ -176,7 +178,7 @@ Page {
             Label {
                 visible: (main.currentNumber > 0)
                 anchors.horizontalCenter: parent.horizontalCenter
-                text: 'Your score is:'
+                text: qsTr("Your score is:")
             }
 
             Label {
@@ -190,7 +192,7 @@ Page {
             Label {
                 visible: main.noMoreMoves
                 anchors.horizontalCenter: parent.horizontalCenter
-                text: "No more moves!"
+                text: qsTr("No more moves!")
             }
         }
     }

@@ -18,7 +18,7 @@ Page {
         spacing: Theme.paddingLarge
 
         PageHeader {
-            title: "About Cento"
+            title: qsTr("About Cento")
         }
 
         Label {
@@ -26,18 +26,18 @@ Page {
             horizontalAlignment: Text.AlignRight
             font.pixelSize: Theme.fontSizeSmall
             font.italic: true
-            text: "Version " + version
+            text: qsTr("Version %1").arg(version)
         }
 
         Label {
             width: parent.width
             wrapMode: Text.WordWrap
-            text: "<i>Cento</i> is a puzzle game whose goal is to fill a 10 x 10 grid with numbers from 1 to 100 following some simple &quot;movement&quot; rules:<br />
+            text: qsTr("<i>Cento</i> is a puzzle game whose goal is to fill a 10 x 10 grid with numbers from 1 to 100 following some simple &quot;movement&quot; rules:<br />
 <ul>
     <li>skip two cells if you want to move horizontally or vertically</li>
     <li>skip one cell if you want to move diagonally</li>
 </ul><br />
-<br />Good luck!"
+<br />Good luck!")
         }
     }
 }

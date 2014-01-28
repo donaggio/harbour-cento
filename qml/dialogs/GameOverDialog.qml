@@ -14,19 +14,21 @@ Dialog {
 
     function getTextByScore(score) {
         var text = "";
+
         if (score == 100) {
-            text = "Here comes the winner!";
+            text = qsTr("Here comes the winner!");
         } else if (score >= 95 && score <= 99 ) {
-            text = "A really great score, you're almost there!";
+            text = qsTr("A really great score, you're almost there!");
         } else if (score >= 90 && score < 95) {
-            text = "Very nice! Just a little more effort ...";
+            text = qsTr("Very nice! Just a little more effort ...");
         } else if (score >= 80 && score < 90) {
-            text = "Good! Let's try again, won't you?";
+            text = qsTr("Good! Let's try again, won't you?");
         } else if (score >= 70 && score < 80) {
-            text = "Oh, come on! I know you can do better!"
+            text = qsTr("Oh, come on! I know you can do better!");
         } else {
-            text = "Mmmm ... What can I say? Bah!";
+            text = qsTr("Mmmm ... What can I say? Bah!");
         }
+
         return text;
     }
 
@@ -36,14 +38,15 @@ Dialog {
         spacing: Theme.paddingLarge
 
         DialogHeader {
-            acceptText: "Start new game"
+            width: parent.width
+            acceptText: qsTr("Start new game")
         }
 
         Label {
             width: parent.width
             horizontalAlignment: Text.AlignHCenter
             font.pixelSize: Theme.fontSizeLarge
-            text: ((score < 100) ? "Game Over" : "Congratulations") + "!"
+            text: ((score < 100) ? qsTr("Game Over!") : qsTr("Congratulations!"))
         }
 
         Label {
