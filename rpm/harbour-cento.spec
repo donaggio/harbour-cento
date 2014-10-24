@@ -13,7 +13,7 @@ Name:       harbour-cento
 %{!?qtc_make:%define qtc_make make}
 %{?qtc_builddir:%define _builddir %qtc_builddir}
 Summary:    Numerical puzzle game
-Version:    0.5
+Version:    0.6
 Release:    1
 Group:      Qt/Qt
 License:    MIT
@@ -65,7 +65,6 @@ desktop-file-install --delete-original       \
 %files
 %defattr(-,root,root,-)
 %{_bindir}
-%{_datadir}/%{name}/l10n
 %{_datadir}/%{name}/qml
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/icons/hicolor/86x86/apps/%{name}.png

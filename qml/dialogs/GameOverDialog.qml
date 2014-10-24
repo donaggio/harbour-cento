@@ -32,15 +32,17 @@ Dialog {
         return text;
     }
 
-    Column {
-        width: (parent.width - (2 * Theme.paddingMedium))
-        anchors.horizontalCenter: parent.horizontalCenter
-        spacing: Theme.paddingLarge
+    DialogHeader {
+        id: header
 
-        DialogHeader {
-            width: parent.width
-            acceptText: qsTr("Start new game")
-        }
+        width: parent.width
+        acceptText: qsTr("Start new game")
+    }
+
+    Column {
+        width: (parent.width - (2 * Theme.paddingLarge))
+        anchors { top: header.bottom; horizontalCenter: parent.horizontalCenter }
+        spacing: Theme.paddingLarge
 
         Label {
             width: parent.width

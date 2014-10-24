@@ -30,7 +30,7 @@ Page {
         delegate: Item {
             id: scoreItem
 
-            width: (parent.width - (2 * Theme.paddingMedium))
+            width: (parent.width - (2 * Theme.paddingLarge))
             height: Theme.itemSizeMedium
             anchors.horizontalCenter: parent.horizontalCenter
 

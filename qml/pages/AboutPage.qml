@@ -13,7 +13,7 @@ Page {
     id: page
 
     Column {
-        width: (parent.width - (2 * Theme.paddingMedium))
+        width: (parent.width - (2 * Theme.paddingLarge))
         anchors.horizontalCenter: parent.horizontalCenter
         spacing: Theme.paddingLarge
 
@@ -26,7 +26,7 @@ Page {
             horizontalAlignment: Text.AlignRight
             font.pixelSize: Theme.fontSizeSmall
             font.italic: true
-            text: qsTr("Version %1").arg(version)
+            text: qsTr("Version %1\n(C) 2014 by Luca Donaggio").arg(Qt.application.version)
         }
 
         Label {
