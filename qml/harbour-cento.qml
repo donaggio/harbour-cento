@@ -1,5 +1,5 @@
 /*
-  Copyright (C) 2014 Luca Donaggio
+  Copyright (C) 2014, 2015 Luca Donaggio
   Contact: Luca Donaggio <donaggio@gmail.com>
   All rights reserved.
 
@@ -11,8 +11,7 @@ import Sailfish.Silica 1.0
 import QtQuick.LocalStorage 2.0
 import "pages"
 
-ApplicationWindow
-{
+ApplicationWindow {
     id: main
     property int currentNumber: 0
     property bool noMoreMoves: false

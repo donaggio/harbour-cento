@@ -1,9 +1,9 @@
 Name: harbour-cento
 Summary: Numerical puzzle game
-Version: 0.6
+Version: 0.7
 Release: 1
 Group: Qt/Qt
-URL: http://example.org/
+URL: https://github.com/donaggio/harbour-cento
 License: MIT
 Sources:
 - '%{name}-%{version}.tar.bz2'
@@ -25,8 +25,4 @@ Files:
 - '%{_datadir}/%{name}/qml'
 - '%{_datadir}/applications/%{name}.desktop'
 - '%{_datadir}/icons/hicolor/86x86/apps/%{name}.png'
-- /usr/bin
-- /usr/share/harbour-cento
-- /usr/share/applications
-- /usr/share/icons/hicolor/86x86/apps
 PkgBR: []

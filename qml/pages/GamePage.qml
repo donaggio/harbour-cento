@@ -1,5 +1,5 @@
 /*
-  Copyright (C) 2014 Luca Donaggio
+  Copyright (C) 2014, 2015 Luca Donaggio
   Contact: Luca Donaggio <donaggio@gmail.com>
   All rights reserved.
 
@@ -12,6 +12,7 @@ import "../lib/dbmanager.js" as DB
 
 Page {
     id: page
+
     property var history: []
 
     function indexToCoord(cellIndex) {
@@ -100,21 +101,24 @@ Page {
 
     SilicaFlickable {
         anchors.fill: parent
-        contentHeight: childrenRect.height
+        contentHeight: header.height + container.height
 
         PullDownMenu {
             MenuItem {
                 text: qsTr("About Cento")
-                onClicked: pageStack.push(Qt.resolvedUrl("AboutPage.qml"), { "version": main.version })
+                onClicked: pageStack.push(Qt.resolvedUrl("AboutPage.qml"))
             }
+
             MenuItem {
                 text: qsTr("High Scores")
                 onClicked: pageStack.push(Qt.resolvedUrl("HiScoresPage.qml"))
             }
+
             MenuItem {
                 text: qsTr("Reset board")
                 onClicked: resetBoard();
             }
+
             MenuItem {
                 visible: (main.currentNumber > 0)
                 text: qsTr("Undo last move")
@@ -122,15 +126,23 @@ Page {
             }
         }
 
+        PageHeader {
+            id: header
+
+            title: qsTr("Cento")
+        }
+
         Column {
             id: container
-            width: (parent.width - (2 * Theme.paddingMedium))
-            anchors.horizontalCenter: parent.horizontalCenter
-            spacing: Theme.paddingLarge
 
-            PageHeader {
-                title: qsTr("Cento")
+            anchors {
+                top: header.bottom
+                right: parent.right
+                rightMargin: (Screen.sizeCategory >= Screen.Large) ? Theme.horizontalPageMargin : Theme.paddingMedium
+                left: parent.left
+                leftMargin: (Screen.sizeCategory >= Screen.Large) ? Theme.horizontalPageMargin : Theme.paddingMedium
             }
+            spacing: Theme.paddingLarge
 
             Grid {
                 rows: 10
@@ -157,7 +169,7 @@ Page {
                         Label {
                             id: cellContent
                             text: ''
-                            font.pointSize: Theme.fontSizeExtraSmall
+                            font.pixelSize: (Screen.sizeCategory >= Screen.Large) ? Theme.fontSizeExtraLarge : Theme.fontSizeExtraSmall
                             anchors.centerIn: parent
                         }
 
@@ -178,13 +190,14 @@ Page {
             Label {
                 visible: (main.currentNumber > 0)
                 anchors.horizontalCenter: parent.horizontalCenter
+                font.pixelSize: (Screen.sizeCategory >= Screen.Large) ? Theme.fontSizeExtraLarge : Theme.fontSizeMedium
                 text: qsTr("Your score is:")
             }
 
             Label {
                 visible: (main.currentNumber > 0)
                 anchors.horizontalCenter: parent.horizontalCenter
-                font.pixelSize: Theme.fontSizeExtraLarge
+                font.pixelSize: (Screen.sizeCategory >= Screen.Large) ? Theme.fontSizeHuge : Theme.fontSizeExtraLarge
                 font.weight: Font.Bold
                 text: main.currentNumber
             }
@@ -192,6 +205,7 @@ Page {
             Label {
                 visible: main.noMoreMoves
                 anchors.horizontalCenter: parent.horizontalCenter
+                font.pixelSize: (Screen.sizeCategory >= Screen.Large) ? Theme.fontSizeExtraLarge : Theme.fontSizeMedium
                 text: qsTr("No more moves!")
             }
         }

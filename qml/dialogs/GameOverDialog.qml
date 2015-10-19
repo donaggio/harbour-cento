@@ -1,5 +1,5 @@
 /*
-  Copyright (C) 2014 Luca Donaggio
+  Copyright (C) 2014, 2015 Luca Donaggio
   Contact: Luca Donaggio <donaggio@gmail.com>
   All rights reserved.
 
@@ -40,14 +40,13 @@ Dialog {
     }
 
     Column {
-        width: (parent.width - (2 * Theme.paddingLarge))
-        anchors { top: header.bottom; horizontalCenter: parent.horizontalCenter }
+        anchors { top: header.bottom; left: parent.left; leftMargin: Theme.horizontalPageMargin; right: parent.right; rightMargin: Theme.horizontalPageMargin }
         spacing: Theme.paddingLarge
 
         Label {
             width: parent.width
             horizontalAlignment: Text.AlignHCenter
-            font.pixelSize: Theme.fontSizeLarge
+            font.pixelSize: (Screen.sizeCategory >= Screen.Large) ? Theme.fontSizeExtraLarge : Theme.fontSizeLarge
             text: ((score < 100) ? qsTr("Game Over!") : qsTr("Congratulations!"))
         }
 
@@ -62,6 +61,7 @@ Dialog {
         Label {
             width: parent.width
             wrapMode: Text.WordWrap
+            font.pixelSize: (Screen.sizeCategory >= Screen.Large) ? Theme.fontSizeLarge : Theme.fontSizeMedium
             text: getTextByScore(score)
         }
     }

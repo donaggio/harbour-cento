@@ -1,5 +1,5 @@
 /*
-  Copyright (C) 2014 Luca Donaggio
+  Copyright (C) 2014, 2015 Luca Donaggio
   Contact: Luca Donaggio <donaggio@gmail.com>
   All rights reserved.
 
@@ -11,6 +11,8 @@ import "../lib/dbmanager.js" as DB
 
 Page {
     id: page
+
+    allowedOrientations: Orientation.Portrait
 
     SilicaListView {
         id: container
@@ -30,22 +32,19 @@ Page {
         delegate: Item {
             id: scoreItem
 
-            width: (parent.width - (2 * Theme.paddingLarge))
             height: Theme.itemSizeMedium
-            anchors.horizontalCenter: parent.horizontalCenter
+            anchors { left: parent.left; leftMargin: Theme.horizontalPageMargin; right: parent.right; rightMargin: Theme.horizonatalPageMargin }
 
             Label {
                 id: posLabel
-                anchors.left: parent.left
-                anchors.baseline: scoreLabel.baseline
+                anchors { left: parent.left; baseline: scoreLabel.baseline }
                 color: Theme.highlightColor
                 text: pos
             }
 
             Label {
                 id: scoreLabel
-                anchors.left: posLabel.right
-                anchors.leftMargin: Theme.paddingMedium
+                anchors { left: posLabel.right; leftMargin: Theme.paddingLarge }
                 font.pixelSize: Theme.fontSizeLarge
                 font.weight: Font.Bold
                 text: score
@@ -53,18 +52,13 @@ Page {
 
             Label {
                 id: timesLabel
-                anchors.baseline: scoreLabel.baseline
-                anchors.left: scoreLabel.right
-                anchors.right: parent.right
-                anchors.leftMargin: Theme.paddingMedium
+                anchors { baseline: scoreLabel.baseline; left: scoreLabel.right; leftMargin: Theme.paddingMedium; right: parent.right }
                 text: qsTr("scored %1 %2").arg(num).arg(((num == 1) ? qsTr("time") : qsTr("times")))
             }
 
             Label {
                 id: lastLabel
-                anchors.top: scoreLabel.bottom
-                anchors.left: scoreLabel.left
-                anchors.right: parent.right
+                anchors { top: scoreLabel.bottom; left: scoreLabel.left; right: parent.right }
                 font.pixelSize: Theme.fontSizeExtraSmall
                 text: ((num == 1) ? qsTr("On") : qsTr("Last on")) + " " + last.toLocaleDateString(Qt.locale())
             }
