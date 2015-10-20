@@ -24,7 +24,8 @@ OTHER_FILES += qml/harbour-cento.qml \
     harbour-cento.png \
     qml/dialogs/GameOverDialog.qml \
     qml/pages/HiScoresPage.qml \
-    qml/lib/dbmanager.js
+    qml/lib/dbmanager.js \
+    icon128/harbour-cento.png
 
 # to disable building translations every time, comment out the
 # following CONFIG line
@@ -33,3 +34,9 @@ TRANSLATIONS += translations/harbour-cento-it.ts
 
 # App version
 DEFINES += APP_VERSION=\"\\\"$${VERSION}\\\"\"
+
+# 128x128 Launcher icon
+icon128.files = icon128/harbour-cento.png
+icon128.path = /usr/share/icons/hicolor/128x128/apps
+
+INSTALLS += icon128

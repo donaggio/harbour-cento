@@ -62,6 +62,10 @@ Page {
                 font.pixelSize: Theme.fontSizeExtraSmall
                 text: ((num == 1) ? qsTr("On") : qsTr("Last on")) + " " + last.toLocaleDateString(Qt.locale())
             }
+
+            ListView.onAdd: AddAnimation { target: scoreItem }
+
+            ListView.onRemove: RemoveAnimation { target: scoreItem }
         }
 
         VerticalScrollDecorator { flickable: container }
