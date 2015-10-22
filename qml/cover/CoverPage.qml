@@ -10,17 +10,19 @@ import QtQuick 2.0
 import Sailfish.Silica 1.0
 
 CoverBackground {
+    /*
+     * Cover background
+     */
+    Image {
+        x: -Theme.paddingLarge
+        y: x
+        source: "../../icons/cover-background.png"
+    }
+
     Column {
         width: (parent.width - (2 * Theme.paddingSmall))
-//        anchors.horizontalCenter: parent.horizontalCenter
         anchors.centerIn: parent
         spacing: Theme.paddingMedium
-
-        Label {
-            width: parent.width
-            horizontalAlignment: Text.AlignHCenter
-            text: qsTr("Cento")
-        }
 
         Label {
             id: labelNewGame

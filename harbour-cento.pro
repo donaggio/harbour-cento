@@ -25,12 +25,18 @@ OTHER_FILES += qml/harbour-cento.qml \
     qml/dialogs/GameOverDialog.qml \
     qml/pages/HiScoresPage.qml \
     qml/lib/dbmanager.js \
-    icon128/harbour-cento.png
+    icon128/harbour-cento.png \
+    icons/cover-background.png
 
 # to disable building translations every time, comment out the
 # following CONFIG line
 CONFIG += sailfishapp_i18n
 TRANSLATIONS += translations/harbour-cento-it.ts
+
+# Custom icons and images
+images.files = icons
+images.path = /usr/share/$${TARGET}
+INSTALLS += images
 
 # App version
 DEFINES += APP_VERSION=\"\\\"$${VERSION}\\\"\"
