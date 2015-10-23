@@ -6,7 +6,7 @@
   You may use this file under the terms of MIT license
 */
 
-import QtQuick 2.0
+import QtQuick 2.2
 import Sailfish.Silica 1.0
 
 Page {
